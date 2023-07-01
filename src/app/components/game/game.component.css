@@ -1,15 +1,17 @@
 .game {
-  display: grid;
   width: 75%;
   height: 635px;
   margin: 0 auto;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
   column-gap: 20px;
   row-gap: 1px;
+
 }
 
 app-card {
-  width: 100%;
+  width: 6%;
   max-height: 95px;
   height: 100%;
   margin-bottom: 10px;

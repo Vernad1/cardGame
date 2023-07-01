@@ -26,7 +26,7 @@ export class Game {
 
   createCards() {
     let res = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 36; i++) {
       let card: ICard = {
         id: i + 1,
         value: Math.round((i + 1) / 2),
@@ -55,6 +55,7 @@ export class Game {
   }
 
   handleClick(id: number, value: number) {
+    this.isStep = false;
 
     if (
       this.selectedCards.length === 2 ||
@@ -108,6 +109,7 @@ export class Game {
         }, 1500);
       }
       this.isStep = true;
+
     } else {
       this.selectedCards = [...this.selectedCards, {id, value, clicked: false, matched: false}];
       this.isStep = false;
