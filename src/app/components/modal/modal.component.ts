@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GameService} from "../../services/game.service";
+import {Component, Input} from '@angular/core';
 
 
 @Component({
@@ -9,10 +8,10 @@ import {GameService} from "../../services/game.service";
 })
 export class ModalComponent {
   @Input() title!: string
-  @Output() click = new EventEmitter()
 
 
-  constructor(private gameService: GameService) {
+  constructor() {
   }
+
 
 }

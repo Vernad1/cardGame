@@ -3,26 +3,29 @@ import {ICard} from "../model/card";
 import {Game} from "../model/Game";
 import {TimeService} from "./time.service";
 import {CountService} from "./count.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
-  cards: ICard[] = [];
+  //cards: ICard[] = [];
+  cards:BehaviorSubject<ICard[]>
   win: boolean = false
   game!: Game
 
 
   constructor(private timeService: TimeService, private countService: CountService) {
-    this.game = new Game()
-    this.cards = this.game.cards
+    this.game = new Game(36)
+    this.cards = this.game.cards$
   }
 
-  newGame() {
-    this.game = new Game()
+  newGame(numberOfCards:number) {
+    this.game = new Game(numberOfCards)
     this.countService.resetCount()
-    this.cards = this.game.cards
-    this.game.cardsSubject$.subscribe(value => this.cards = value)
+    this.cards = this.game.cards$
+    //this.game.cards$.subscribe(value => this.cards = value)
+    //this.cards = this.game.cards
 
     this.game.win$.subscribe(value => {
       this.win = value

@@ -5,16 +5,16 @@ import {BehaviorSubject} from "rxjs";
   providedIn: 'root'
 })
 export class CountService {
-  count: BehaviorSubject<number> = new BehaviorSubject<number>(0)
+  count$: BehaviorSubject<number> = new BehaviorSubject<number>(0)
 
   constructor() {
   }
 
   step() {
-    this.count.next(this.count.value + 1)
+    this.count$.next(this.count$.value + 1)
   }
 
   resetCount() {
-    this.count.next(0)
+    this.count$.next(0)
   }
 }

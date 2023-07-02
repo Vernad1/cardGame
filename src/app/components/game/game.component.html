@@ -1,21 +1,34 @@
-<div class="count">Ходы: {{this.countService.count | async}} Время: {{this.timeService.formattedTime | async}}</div>
+<div class="count">Ходы: {{this.countService.count$ | async}} Время: {{this.timeService.formattedTime$ | async}}</div>
 
 
 <div class="game">
-    <app-card *ngFor="let card of this.gameService.cards " [card]="card" >
-    </app-card>
+  <app-card *ngFor="let card of this.gameService.cards | async " [card]="card">
+  </app-card>
 </div>
 
 
-<app-modal *ngIf="modalShow" (click)="startGame()" title="Игра 'Найди пару'">
+<app-modal *ngIf="modalShow"  title="Игра 'Найди пару'">
+
+  <div class="buttons">
+    <button class="modal__button" (click)="startGame(18)">Легкая</button>
+    <button class="modal__button" (click)="startGame(24)">Средняя</button>
+    <button class="modal__button" (click)="startGame(36)">Сложная</button>
+  </div>
+
 
 </app-modal>
 
-<app-modal *ngIf="this.gameService.win" (click)="restartGame()" title="Вы выиграли">
+<app-modal *ngIf="this.gameService.win" (click)="startGame(18)" title="Вы выиграли">
 
   <div class="modal__info">
-    <span>Ходы: {{this.countService.count | async}} </span>
-    <span>Время: {{this.timeService.formattedTime | async}}</span>
+    <span>Ходы: {{this.countService.count$ | async}} </span>
+    <span>Время: {{this.timeService.formattedTime$ | async}}</span>
+  </div>
+
+  <div class="buttons">
+    <button class="modal__button" (click)="startGame(18)">Легкая</button>
+    <button class="modal__button" (click)="startGame(24)">Средняя</button>
+    <button class="modal__button" (click)="startGame(36)">Сложная</button>
   </div>
 
 </app-modal>

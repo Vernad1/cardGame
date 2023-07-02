@@ -12,20 +12,13 @@ import {CountService} from "../../services/count.service";
 })
 export class GameComponent {
   modalShow: boolean = true
-  winModalShow: boolean = false
 
   constructor(public gameService: GameService, public timeService:TimeService, public countService:CountService) {
   }
 
-  startGame() {
-    this.gameService.newGame()
+  startGame(numberOfCards:number) {
+    this.gameService.newGame(numberOfCards)
     this.modalShow = false;
-    this.timeService.startCounting()
-  }
-
-  restartGame() {
-    this.gameService.newGame()
-    this.winModalShow = false
     this.timeService.startCounting()
   }
 

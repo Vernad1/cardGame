@@ -1,7 +1,5 @@
 import {ICard} from "./card";
-import {BehaviorSubject, Observable} from "rxjs";
-import {TimeService} from "../services/time.service";
-import {CountService} from "../services/count.service";
+import {BehaviorSubject, Observable, of} from "rxjs";
 
 
 export class Game {
@@ -10,23 +8,20 @@ export class Game {
   selectedCards: (ICard | undefined)[] = [];
   isStep: Boolean = false;
 
-  cardsSubject: BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([])
-  cardsSubject$: Observable<ICard[]> = this.cardsSubject.asObservable()
+  cards$: BehaviorSubject<ICard[]> = new BehaviorSubject<ICard[]>([])
+  win$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
-  win: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  win$: Observable<boolean> = this.win.asObservable()
-
-  constructor() {
+  constructor(numberOfCards: number) {
     this.selectedCards = [];
-    this.cards = this.createCards()
+    this.cards = this.createCards(numberOfCards)
     this.setCardsSubject(this.cards)
     this.cards = this.shuffleCards(this.cards)
-    this.win.next(false)
+    this.win$.next(false)
   }
 
-  createCards() {
+  createCards(numberOfCards: number) {
     let res = [];
-    for (let i = 0; i < 36; i++) {
+    for (let i = 0; i < numberOfCards; i++) {
       let card: ICard = {
         id: i + 1,
         value: Math.round((i + 1) / 2),
@@ -44,13 +39,12 @@ export class Game {
 
 
   setCardsSubject(cards: ICard[]) {
-    this.cardsSubject.next(cards)
+    this.cards$.next(cards)
   }
 
   isWin() {
     if (!this.cards.find(card => card.matched === false)) {
-      this.win.next(true)
-      //this.timeService.clearTimeInterval()
+      this.win$.next(true)
     }
   }
 
@@ -71,8 +65,6 @@ export class Game {
     }
 
     if (this.selectedCards.length === 1 && this.selectedCards[0]) {
-
-      //this.countService.step()
 
       const card1: ICard = this.selectedCards[0];
       const card2: ICard | undefined = this.cards.find(
